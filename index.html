@@ -3,88 +3,221 @@
 <head>
 	<title>Rock Paper Scissors Game</title>
 	<meta charset="utf-8">
+	<style>
+
+		#reset {
+			background: green;
+			color: white;
+			border-radius: 5px;
+			padding: 15px;
+			padding-left: 10px;
+			border: 1px solid lightgreen;
+			font-size: 15px;
+			float: right;
+			position: relative;
+		}
+		#showPlayerScore {
+			float: right;
+			margin-right: 20px;
+		}
+		#showComputerScore {
+			float: right;
+			margin-right: 20px;
+		}
+		.options {
+			background: lightblue;
+			padding: 10px;
+			border-radius: 5px;
+			border: 1px solid rgb(42, 149, 236);
+			text-align: center;
+			padding-left: 20px;
+			padding-right: 20px;
+			margin-left: 20px;
+			font-size: 24px;
+		}
+		#roundNo {
+			margin-left: 20px;
+			color: rgb(4, 243, 252);
+			font-size: 24px;
+		}
+		#winner, #theWinner {
+			font-size: 18px;
+			margin-left: 20px;
+		}
+	</style>
 </head>
 <body>
+	<button id="reset" class='floatRight' onclick='resetFunction()'><strong>RESET</strong></button>
+	<p id='showComputerScore'></p>
+	<p id='showPlayerScore'></p>
+	
+	
+	<p id="roundNo"></p>
+	<p id="winner"></p>
+	<p id="theWinner"></p>
+
+	<button id="rock" class='options' onclick="rSelector()">Rock</button>
+	<button id="paper" class='options' onclick="pSelector()">Paper</button>
+	<button id="scissors" class='options' onclick="sSelector()">Scissors</button>
+	
+
+
 	<script>
 
+	const rock = document.querySelector('#rock');
+	const paper = document.querySelector('#paper');
+	const scissors = document.querySelector('#scissors');
+	const roundNo = document.querySelector('#roundNo');
+	const reset = document.querySelector('#reset');
+	let winner = document.querySelector('#winner');
+	let theWinner = document.querySelector('#theWinner');
+	let showPlayerScore = document.querySelector('#showPlayerScore');
+	let showComputerScore = document.querySelector('#showComputerScore');
+	
+	function playerScoreFunction() {
+		showPlayerScore.innerText = 'Your Score: ' + playerScore;
+	}
+	function computerScoreFunction() {
+		showComputerScore.innerText = "Computer's Score: " + computerScore;
+	}
+	function score() {
+		playerScoreFunction();
+		computerScoreFunction();
+		if (playerScore > computerScore) {
+			showPlayerScore.style.color = 'rgb(0, 140, 255)';
+			showComputerScore.style.color = 'red';
+		}
+		else if (playerScore < computerScore) {
+			showPlayerScore.style.color = 'red';
+			showComputerScore.style.color = 'rgb(0, 140, 255)';
+		}
+		else if (playerScore == computerScore) {
+			showPlayerScore.style.color = 'rgb(0, 140, 255)';
+			showComputerScore.style.color = 'rgb(0, 140, 255)';
+		}
+	}
 
 	let computerScore = 0;
 	let playerScore = 0;
-
+	let numberOfTimes = 0;
+	roundNo.innerText = 'Round No: ' + numberOfTimes;
+	score();
 
 	function computerPlay() {
 		let randomNumber = Math.floor(Math.random() * 3)
 		if (randomNumber == 0) {
-			return "rock";
+			computerSelection = "rock";
 		}
 		else if (randomNumber == 1) {
-			return "paper";
+			computerSelection = "paper";
 		}
 		else {
-			return "scissors";
+			computerSelection = "scissors";
 		}
 	};
 
 	function playRound(playerSelection, computerSelection) {
-		if (((playerSelection == "rock" || playerSelection == "1") && (computerSelection == "rock")) || ((playerSelection == "paper" || playerSelection == "2") && (computerSelection == "paper")) || ((playerSelection == "scissors" || playerSelection == "3") && (computerSelection == "scissors"))) {
-			return "It's a Draw!"
+		if ((playerSelection == "rock" && computerSelection == "rock") || (playerSelection == "paper" && computerSelection == "paper") || (playerSelection == "scissors" && computerSelection == "scissors")) {
+			numberOfTimes += 1;
+			roundNo.innerText = 'Round No: ' + numberOfTimes;
+			winner.innerText = "It's a Draw!"
+			score();
 		}
 
-		else if ((playerSelection == "rock" || playerSelection == "1") && (computerSelection == "paper")) {
+		else if (playerSelection == "rock" && computerSelection == "paper") {
 			computerScore += 1;
-			console.log("You Lost! Paper beats Rock");
+			numberOfTimes += 1;
+			roundNo.innerText = 'Round No: ' + numberOfTimes;
+			winner.innerText = "You Lost! Paper beats Rock";
+			winner.style.color = 'red';
+			score();
 		}
-		else if ((playerSelection == "rock" || playerSelection == "1") && (computerSelection == "scissors")) {
+		else if (playerSelection == "rock" && computerSelection == "scissors") {
 			playerScore += 1;
-			console.log("You Won! Rock beats Scissors");
+			numberOfTimes += 1;
+			roundNo.innerText = 'Round No: ' + numberOfTimes;
+			winner.innerText = "You Won! Rock beats Scissors";
+			winner.style.color = 'green';
+			score();
 		}
-		else if ((playerSelection == "paper" || playerSelection == "2") && (computerSelection == "rock")) {
+		else if (playerSelection == "paper" && computerSelection == "rock") {
 			playerScore += 1;
-			console.log("You Won! Paper beats Rock");
+			numberOfTimes += 1;
+			roundNo.innerText = 'Round No: ' + numberOfTimes;
+			winner.innerText = "You Won! Paper beats Rock";
+			winner.style.color = 'green';
+			score();
 		}
-		else if ((playerSelection == "paper" || playerSelection == "2") && (computerSelection == "scissors")) {
+		else if (playerSelection == "paper" && computerSelection == "scissors") {
 			computerScore += 1;
-			console.log("You Lost! Scissors beats Paper");
+			numberOfTimes += 1;
+			roundNo.innerText = 'Round No: ' + numberOfTimes;
+			winner.innerText = "You Lost! Scissors beats Paper";
+			winner.style.color = 'red';
+			score();
 		}
-		else if ((playerSelection == "scissors" || playerSelection == "3") && (computerSelection == "rock")) {
+		else if (playerSelection == "scissors" && computerSelection == "rock") {
 			computerScore += 1;
-			console.log("You Lost! Rock beats Scissors");
+			numberOfTimes += 1;
+			roundNo.innerText = 'Round No: ' + numberOfTimes;
+			winner.innerText = "You Lost! Rock beats Scissors";
+			winner.style.color = 'red';
+			score();
 		}
-		else if ((playerSelection == "scissors" || playerSelection == "3") && (computerSelection == "paper")) {
+		else if (playerSelection == "scissors" && computerSelection == "paper") {
 			playerScore += 1;
-			console.log("You Won! Scissors beats Paper");
-		}
-		else {
-			console.log("Unknown value. Skipping to next round if there is any.");
+			numberOfTimes += 1;
+			roundNo.innerText = 'Round No: ' + numberOfTimes;
+			winner.innerText = "You Won! Scissors beats Paper";
+			winner.style.color = 'green';
+			score();
 		}
 	};
 
-
-	function playGame(variable) {
-		let playerSelection = prompt("Round " + variable + ": Choose among Rock/1, Paper/2 and Scissors/3 to play. Remember to open your console in devtool.")
-		playerSelection = playerSelection.toLowerCase()
-		let computerSelection = computerPlay()
-		console.log(playRound(playerSelection, computerSelection))
-
-		console.log("You:Computer = " + playerSelection + ":" + computerSelection + " = " + playerScore + ":" + computerScore);
+	
+	function rSelector() {
+		computerPlay()
+		playerSelection = "rock";
+		playRound(playerSelection, computerSelection);
+		theWinnerFunction();
+	}
+	function pSelector() {
+		computerPlay()
+		playerSelection = "paper";
+		playRound(playerSelection, computerSelection)
+		theWinnerFunction();
+	}
+	function sSelector() {
+		computerPlay()
+		playerSelection = "scissors";
+		playRound(playerSelection, computerSelection)
+		theWinnerFunction();
 	}
 
-	playGame("1")
-	playGame("2")
-	playGame("3")
-	playGame("4")
-	playGame("5")
+	function theWinnerFunction() { 
+		if (numberOfTimes == 5 && playerScore > computerScore) {
+			theWinner.innerText = "You won the game. Press the RESET button to play again";
+			theWinner.style.color = 'green';
+		}
+		else if (numberOfTimes == 5 && playerScore < computerScore) {
+			theWinner.innerText = "You lost but dont worry try again by pressing the RESET button.";
+			theWinner.style.color = 'red';
+		}
+		else if (numberOfTimes == 5 && playerScore == computerScore) {
+			theWinner.innerText = "It's a tie! try again by pressing the RESET button.";
+			theWinner.style.color = 'rgb(0, 140, 255)';
+		}
+	}
 
-	if (playerScore > computerScore) {
+	function resetFunction() {
+		numberOfTimes = 0;
+		playerScore = 0;
+		computerScore = 0;
+		numberOfTimes.innerText = '0';
+		winner.innerText = '';
+		theWinner.innerText = '';
+	}
 
-		console.log("You won the game. Refresh the page to play again")
-	}
-	else if (playerScore < computerScore) {
-		console.log("You lost but dont worry try again by refreshing the page.")
-	}
-	else if (playerScore == computerScore) {
-		console.log("It's a tie! try again by refreshing the page.")
-	}
 
 	</script>
 </body>
