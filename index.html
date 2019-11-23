@@ -117,6 +117,7 @@
 	};
 
 	function playRound(playerSelection, computerSelection) {
+		if(numberOfTimes<5){
 		if ((playerSelection == "rock" && computerSelection == "rock") || (playerSelection == "paper" && computerSelection == "paper") || (playerSelection == "scissors" && computerSelection == "scissors")) {
 			numberOfTimes += 1;
 			roundNo.innerText = 'Round No: ' + numberOfTimes;
@@ -171,7 +172,7 @@
 			winner.innerText = "You Won! Scissors beats Paper";
 			winner.style.color = 'green';
 			score();
-		}
+		}}
 	};
 
 	
@@ -213,7 +214,9 @@
 		numberOfTimes = 0;
 		playerScore = 0;
 		computerScore = 0;
-		numberOfTimes.innerText = '0';
+		playerScoreFunction();
+		computerScoreFunction();
+		roundNo.innerText = 'Round No: ' + numberOfTimes;
 		winner.innerText = '';
 		theWinner.innerText = '';
 	}
